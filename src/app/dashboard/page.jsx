@@ -57,7 +57,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center">
             <Activity className="h-8 w-8 text-blue-500" />
-            <span className="ml-2 text-xl font-semibold">API Testing Platform</span>
+            <span className="ml-2 text-xl font-semibold">TestifAI</span>
           </div>
           <div className="flex items-center space-x-4">
             <div className="text-sm text-gray-600">{session.user.email}</div>
