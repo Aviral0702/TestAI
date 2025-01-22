@@ -17,6 +17,16 @@ export default function Dashboard() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const res = await fetch("/api/apis",{
+      method: "POST",
+      body: JSON.stringify({apiName, baseURL}),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    });
+    if(res.ok){
+      console.log("API details uploaded successfully!");
+    }
   }
   return (
     <div>
