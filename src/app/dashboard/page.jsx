@@ -1,13 +1,19 @@
-import { getServerSession } from "next-auth";
-import { useSession,signOut } from "next-auth/react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-export default async function Dashboard() {
-  const {data} = useSession();
-  const session = await getServerSession(authOptions)
-  if(!session) {
-    return <div>Unauthorized, Please login to continue to the dashboard...</div>
+"use client";
+
+import { useSession, signOut } from "next-auth/react";
+
+export default function Dashboard() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <div>Loading...</div>; // Loading state
   }
-  return(
+
+  if (!session) {
+    return <div>Unauthorized, Please login to continue to the dashboard...</div>; // Unauthorized state
+  }
+
+  return (
     <div>
       <h1>Welcome, {session.user.name}!</h1>
       <p>Email: {session.user.email}</p>
@@ -18,6 +24,5 @@ export default async function Dashboard() {
         <p>Upload API details to start generating tests!</p>
       </div>
     </div>
-  )
-  }
-  
+  );
+}
