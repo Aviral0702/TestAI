@@ -10,7 +10,9 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
   const [apiName, setApiName] = useState("");
   const [baseURL, setBaseURL] = useState("");
-
+  const [httpMethod, setHttpMethod] = useState("");
+  const [requestBody,setRequestBody] = useState("");
+  const [expectedResponse, setExpectedResponse] = useState("");
   if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -60,7 +62,7 @@ export default function Dashboard() {
             <span className="ml-2 text-xl font-semibold">TestifAI</span>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-600">{session.user.email}</div>
+            <div className="hidden sm:block text-sm text-gray-600">{session.user.name}</div>
             <Button
               variant="ghost"
               size="sm"
@@ -119,6 +121,39 @@ export default function Dashboard() {
                     required
                   />
                 </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">HTTP Method</label>
+                  <Input
+                    type="text"
+                    placeholder="Eg. GET, POST"
+                    value={httpMethod}
+                    onChange={(e) => setHttpMethod(e.target.value)}
+                    className="mt-1"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Request Body</label>
+                  <Input
+                    type="text"
+                    placeholder="Enter request body"
+                    value={requestBody}
+                    onChange={(e) => setRequestBody(e.target.value)}
+                    className="mt-1"
+                    
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Expected Response</label>
+                  <Input
+                    type="text"
+                    placeholder="Expected Response"
+                    value={expectedResponse}
+                    onChange={(e) => setExpectedResponse(e.target.value)}
+                    className="mt-1"
+                    required
+                  />
+                </div>
                 <Button type="submit" className="w-full">
                   <Plus className="h-4 w-4 mr-2" />
                   Add API
@@ -133,7 +168,7 @@ export default function Dashboard() {
               <CardTitle>Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <div className="text-blue-600 text-2xl font-semibold">0</div>
                   <div className="text-sm text-gray-600">Total APIs</div>
