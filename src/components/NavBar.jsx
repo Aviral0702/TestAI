@@ -5,6 +5,7 @@ import { signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import AuthButtons from './AuthButtons';
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -76,12 +77,7 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <button
-                onClick={() => signIn('google')}
-                className="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition"
-              >
-                Sign In
-              </button>
+              <AuthButtons/>
             )}
           </div>
 
