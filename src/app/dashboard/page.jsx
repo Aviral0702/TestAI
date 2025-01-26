@@ -1,9 +1,17 @@
 "use client";
+
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { LogOut, Plus, Activity, Database } from "lucide-react";
 
 export default function Dashboard() {
@@ -11,8 +19,9 @@ export default function Dashboard() {
   const [apiName, setApiName] = useState("");
   const [baseURL, setBaseURL] = useState("");
   const [httpMethod, setHttpMethod] = useState("");
-  const [requestBody,setRequestBody] = useState("");
+  const [requestBody, setRequestBody] = useState("");
   const [expectedResponse, setExpectedResponse] = useState("");
+
   if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -26,7 +35,9 @@ export default function Dashboard() {
       <div className="flex min-h-screen items-center justify-center">
         <Card className="w-96">
           <CardHeader>
-            <CardTitle className="text-center text-red-500">Unauthorized Access</CardTitle>
+            <CardTitle className="text-center text-red-500">
+              Unauthorized Access
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-center text-gray-600">
@@ -40,9 +51,17 @@ export default function Dashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const parsedRequestbody = JSON.parse(requestBody);
+    const parsedExpectedResponse = JSON.parse(expectedResponse);
     const res = await fetch("/api/apis", {
       method: "POST",
-      body: JSON.stringify({ apiName, baseURL }),
+      body: JSON.stringify({
+        apiName,
+        baseURL,
+        httpMethod,
+        parsedRequestbody,
+        parsedExpectedResponse,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,7 +81,9 @@ export default function Dashboard() {
             <span className="ml-2 text-xl font-semibold">TestifAI</span>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="hidden sm:block text-sm text-gray-600">{session.user.name}</div>
+            <div className="hidden sm:block text-sm text-gray-600">
+              {session.user.name}
+            </div>
             <Button
               variant="ghost"
               size="sm"
@@ -78,18 +99,8 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Welcome back, {session.user.name}!
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Manage your API testing configurations and view results.
-          </p>
-        </div>
-
-        {/* API Upload Card */}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* API Upload Card */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -100,7 +111,9 @@ export default function Dashboard() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">API Name</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    API Name
+                  </label>
                   <Input
                     type="text"
                     placeholder="Enter API name"
@@ -111,7 +124,9 @@ export default function Dashboard() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Base URL</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Base URL
+                  </label>
                   <Input
                     type="text"
                     placeholder="https://api.example.com"
@@ -122,29 +137,37 @@ export default function Dashboard() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">HTTP Method</label>
-                  <Input
-                    type="text"
-                    placeholder="Eg. GET, POST"
-                    value={httpMethod}
-                    onChange={(e) => setHttpMethod(e.target.value)}
-                    className="mt-1"
-                    required
-                  />
+                  <label className="text-sm font-medium text-gray-700">
+                    HTTP Method
+                  </label>
+                  <Select onValueChange={(value) => setHttpMethod(value)}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select an HTTP Method" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="GET">GET</SelectItem>
+                      <SelectItem value="POST">POST</SelectItem>
+                      <SelectItem value="PUT">PUT</SelectItem>
+                      <SelectItem value="DELETE">DELETE</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Request Body</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Request Body
+                  </label>
                   <Input
                     type="text"
                     placeholder="Enter request body"
                     value={requestBody}
                     onChange={(e) => setRequestBody(e.target.value)}
                     className="mt-1"
-                    
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Expected Response</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Expected Response
+                  </label>
                   <Input
                     type="text"
                     placeholder="Expected Response"
@@ -178,11 +201,15 @@ export default function Dashboard() {
                   <div className="text-sm text-gray-600">Tests Run</div>
                 </div>
                 <div className="bg-purple-50 p-4 rounded-lg">
-                  <div className="text-purple-600 text-2xl font-semibold">0%</div>
+                  <div className="text-purple-600 text-2xl font-semibold">
+                    0%
+                  </div>
                   <div className="text-sm text-gray-600">Success Rate</div>
                 </div>
                 <div className="bg-orange-50 p-4 rounded-lg">
-                  <div className="text-orange-600 text-2xl font-semibold">0</div>
+                  <div className="text-orange-600 text-2xl font-semibold">
+                    0
+                  </div>
                   <div className="text-sm text-gray-600">Active Tests</div>
                 </div>
               </div>
