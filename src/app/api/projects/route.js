@@ -48,7 +48,7 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
-    const { name, description } = req.body;
+    const { name, description } = await req.json();
     const userId = session.user.id;
 
     const project = await prisma.project.create({
@@ -66,7 +66,7 @@ export async function POST(req) {
       "Error in creating project",
       error instanceof Error ? error.message : error
     );
-    return NextResponse(
+    return new NextResponse(
       {
         message: "Failed to create project",
       },
