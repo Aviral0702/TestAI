@@ -49,13 +49,12 @@ export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
     const { name, description } = await req.json();
-    const userId = session.user.id;
-
+    const userId = await session.user.id;
     const project = await prisma.project.create({
       data: {
         name,
         description,
-        userId,
+        userId: userId,
       },
     });
     return new NextResponse(JSON.stringify(project), {
