@@ -12,47 +12,26 @@ export async function POST(req) {
       );
     }
 
-    // Ensure user exists in database
-    const user = await prisma.user.upsert({
-      where: { email: session.user.email },
-      update: {},
-      create: {
-        id: session.user.id,
-        email: session.user.email,
-        name: session.user.name || 'Unknown User',
-        hashedPassword: '', // Empty for OAuth users
-      },
-    });
-
     const data = await req.json();
-
-    const newProject = await prisma.$transaction(async (tx) => {
-      const project = await tx.project.create({
-        data: {
-          name: data.apiName,
-          description: "",
-          userId: user.id,
-          endpoints: {
-            create: {
-              method: data.httpMethod,
-              url: data.baseURL,
-              payload: safeJsonParse(data.requestBody) || {},
-              tests: {
-                create: {
-                  testCode: safeJsonParse(data.expectedResponse) || {},
-                },
-              },
-            },
-          },
-        },
-      });
-
-      return project;
+    console.log(data);
+    const newEndpoint = await prisma.endpoint.create({
+      data: {
+        projectId: data.projectId,
+        method: data.httpMethod,
+        url: data.baseURL,
+        payload: safeJsonParse(data.requestBody) || {},
+        tests: {
+          create: {
+            testCode: safeJsonParse(data.expectedResponse) || {}
+          }
+        }
+      }
+      
     });
 
     return NextResponse.json({ 
       message: "API Added successfully", 
-      newProject 
+      newEndpoint 
     });
   } catch (error) {
     return NextResponse.json(
