@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { LogOut, Plus, Activity, Database } from "lucide-react";
 import StatsCard from "@/components/StatsCard";
+import { ComboboxDemo } from "@/components/ui/ComboBox";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -22,7 +23,19 @@ export default function Dashboard() {
   const [httpMethod, setHttpMethod] = useState("");
   const [requestBody, setRequestBody] = useState("");
   const [expectedResponse, setExpectedResponse] = useState("");
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await fetch("/api/projects");
+      const data = await response.json();
+      console.log(data);
+      setProjects(data);
+    };
+
+    fetchProjects();
+  }, []);
   if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -52,23 +65,32 @@ export default function Dashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedProject) {
+      alert("Please select a project");
+      return;
+    }
     const parsedRequestbody = JSON.parse(requestBody);
     const parsedExpectedResponse = JSON.parse(expectedResponse);
-    const res = await fetch("/api/apis", {
-      method: "POST",
-      body: JSON.stringify({
-        apiName,
-        baseURL,
-        httpMethod,
-        parsedRequestbody,
-        parsedExpectedResponse,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      console.log("API details uploaded successfully!");
+    try {
+      const res = await fetch("/api/apis", {
+        method: "POST",
+        body: JSON.stringify({
+          apiName,
+          projectId: selectedProject.id,
+          baseURL,
+          httpMethod,
+          parsedRequestbody,
+          parsedExpectedResponse,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        console.log("API details uploaded successfully!");
+      }
+    } catch (error) {
+      console.error("Failed to upload API details", error);
     }
   };
 
@@ -122,6 +144,15 @@ export default function Dashboard() {
                     onChange={(e) => setApiName(e.target.value)}
                     className="mt-1"
                     required
+                  />
+                </div>
+                <div className="flex flex-col space-y-2 w-full">
+                  <label className="text-sm font-medium text-gray-700">
+                    Project
+                  </label>
+                  <ComboboxDemo
+                    projects={projects}
+                    setSelectedProject={setSelectedProject}
                   />
                 </div>
                 <div>
@@ -187,7 +218,7 @@ export default function Dashboard() {
           </Card>
 
           {/* Stats Card */}
-          <StatsCard/>
+          <StatsCard />
         </div>
       </div>
     </div>
