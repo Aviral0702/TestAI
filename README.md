@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TestAI
 
-## Getting Started
+## Description
+TestAI aims to revolutionize testing workflows by generating, storing, and executing API test cases using AI.
 
-First, run the development server:
+## Features
+- **AI-Generated Tests**: Instantly generate robust API test cases with our advanced AI technology.
+- **Seamless Storage**: Save and manage your tests effortlessly in one centralized location.
+- **Automated Execution**: Run tests directly in your CI/CD pipeline with zero configuration.
+- **Customizable Test Cases**: Modify AI-generated tests to perfectly fit your specific needs.
+- **Framework Integration**: Supports Jest, Supertest, and all popular testing frameworks.
+- **Real-time Analytics**: Get detailed insights into your test coverage and performance.
 
+## Installation Instructions
+1. Clone the repository: `git clone <repository-url>`
+2. Navigate to the project directory: `cd testai`
+3. Install dependencies: `npm install`
+
+## Usage
+To start the application, run:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Visit `http://localhost:3000` in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Management
+Users can manage APIs through the dashboard by adding new APIs and viewing statistics.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue for any suggestions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+This project is licensed under the MIT License.
