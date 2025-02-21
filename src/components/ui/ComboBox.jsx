@@ -43,7 +43,7 @@ export function ComboboxDemo({ projects, setSelectedProject }) {
         <Command>
           <CommandInput placeholder="Search framework..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No Projects found.</CommandEmpty>
             <CommandGroup>
               {projects.map((project) => (
                 <CommandItem
