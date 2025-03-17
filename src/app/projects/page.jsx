@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { toast } from "sonner";
 export default function CreateProject() {
   const [name, setname] = useState("");
   const [description, setDescription] = useState("");
@@ -22,7 +23,9 @@ export default function CreateProject() {
         },
         body: JSON.stringify({ name, description }),
       });
-
+      setname("");
+      setDescription("");
+      toast.success("Project created successfully");
       if (!res.ok) throw new Error("Failed to create project");
     } catch (error) {
       setError(error.message);
