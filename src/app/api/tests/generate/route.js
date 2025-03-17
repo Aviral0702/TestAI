@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { prisma } from "../../projects/route";
 
 export async function POST(req) {
   try {
@@ -32,11 +33,26 @@ export async function POST(req) {
 
     const data = await response.json();
     console.log(data.candidates[0].content.parts[0].text);
+    const rawTests = data.candidates[0].content.parts.text;
+
+    const storedTests = await Promise.all(
+      parsedTests.map(test => 
+        prisma.test.create({
+          data:{
+            endpointId,
+            name: `Test for ${requestType} API at ${url}`,
+            testCode: rawTests,
+          }
+        })
+      )
+    )
+
     return NextResponse.json(
       {
-        tests: data.candidates[0].content.parts[0].text
+        success: true,
+        tests: storedTests,
       },
-      { status: 200 }
+      { status: 201 }
     );
   } catch (error) {
     console.error(error);

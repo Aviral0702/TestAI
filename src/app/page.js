@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar/>
       <main className="relative">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6 md: py-12">
             <div className="flex flex-col items-center space-y-8 text-center">
               <div className="space-y-4">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-7xl/none xl:text-8xl/none">
@@ -47,7 +47,7 @@ export default function Home() {
         </section>
 
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 border-t border-border/40 bg-black/30">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight lg:text-5xl/tight xl:text-6xl/tight">
@@ -110,7 +110,7 @@ export default function Home() {
 
         <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent" />
-          <div className="container relative px-4 md:px-6">
+          <div className="container relative mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
@@ -160,7 +160,7 @@ export default function Home() {
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 border-t border-border/40 bg-black/30">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">What Our Users Say</h2>
@@ -209,7 +209,7 @@ export default function Home() {
 
         <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent" />
-          <div className="container relative px-4 md:px-6">
+          <div className="container relative mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">Choose Your Plan</h2>
@@ -281,7 +281,7 @@ export default function Home() {
         </section>
 
         <section id="faq" className="w-full py-12 md:py-24 lg:py-32 border-t border-border/40 bg-black/30">
-          <div className="container px-4 md:px-6">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
@@ -331,7 +331,7 @@ export default function Home() {
         </section>
       </main>
       <footer className="w-full border-t border-border/40 bg-black/30 py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0">
+        <div className="container mx-auto flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0">
           <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
             <Sparkles className="h-6 w-6 text-primary" />
             <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
